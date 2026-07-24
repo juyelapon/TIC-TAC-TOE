@@ -33,6 +33,14 @@ main {
 
 }
 
+.heading2{
+        font-size: 30px;
+    font-weight: bolder;
+    color: aqua;
+    text-align: center;
+    margin-bottom: 80px;
+}
+
 .main-btn-box {
     height: 60vmin;
     width: 60vmin;
@@ -259,5 +267,8 @@ main {
 }
 
 .hide {
+    display: none;
+}
+.hidden{
     display: none;
 }
