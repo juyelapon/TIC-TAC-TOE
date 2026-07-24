@@ -1,7 +1,9 @@
-let Btn1 = document.querySelectorAll(".btn-x");
-let Btn2 = document.querySelectorAll(".btn-box");
+let boxes = document.querySelectorAll(".btn-x, .btn-box");
+let newBtn = document.querySelector(".new");
+let heading = document.querySelector(".winner");
+let hidden = document.querySelector(".hide");
 let BtnReset = document.querySelector(".reset");
-let PlayerO = true;
+let Player = true;
 
 const winPatterns = [
     [0, 1, 2],
@@ -14,28 +16,64 @@ const winPatterns = [
     [6, 7, 8],
 ];
 
-Btn1.forEach((box) => {
-box.addEventListener('click', () => {
-    if(PlayerO){
-        box.innerText = "O";
-        PlayerO = false;
-    }else{
-        box.innerText = "X";
-        PlayerO = true;
-    }
-   box.disabled = true;
-})
-});
+boxes.forEach((btn) =>{
+    btn.addEventListener("click", () => {
+        if(Player){
+            btn.innerText = "O";
+            Player = false;
+        }else{
+            btn.innerText = "X";
+            Player = true;
+        }
 
-Btn2.forEach((box) => {
-box.addEventListener('click', () => {
-    if(PlayerO){
-        box.innerText = "O";
-        PlayerO = false;
-    }else{
-        box.innerText = "X";
-        PlayerO = true;
+        btn.disabled =true;
+        checkWinner();
+    })
+})
+
+const showWInner = (winner) => {
+heading.innerText = `CONGRATULATIONS WINNER IS ${winner}`;
+hidden.classList.remove("hide");
+disabledboxes();
+}
+
+const checkWinner = () => {
+for(let patterns of winPatterns){
+
+    let Pos1 = boxes[patterns[0]].innerText;
+    let Pos2 = boxes[patterns[1]].innerText;
+    let Pos3 = boxes[patterns[2]].innerText;
+
+    if(Pos1 !== "" && Pos2 !== "" && Pos3 !== "" ){
+        if(Pos1 === Pos2 && Pos2 === Pos3){
+            console.log('winner', Pos1);
+            showWInner(Pos1)
+            
+        }
     }
-     box.disabled = true;
-})
-})
+    
+}
+};
+
+
+const disabledboxes = () => {
+    for(let box of boxes){
+        box.disabled = true;
+    }
+};
+const enabledboxes = () => {
+    for(let box of boxes){
+        box.disabled = false;
+        box.innerText = "";
+    }
+};
+
+const resetgame = () => {
+    Player = true;
+    enabledboxes();
+    hidden.classList.add("hide")
+
+};
+
+newBtn.addEventListener('click', resetgame);
+BtnReset.addEventListener("click", resetgame);
